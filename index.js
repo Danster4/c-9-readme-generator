@@ -1,6 +1,8 @@
 // TODO: Include packages needed for this application
 const inquirer = require('inquirer');
-// const generateMarkdown = require('./utils/generateMarkdown.js');
+const fs = require('fs');
+const generateMarkdown = require('./utils/generateMarkdown.js');
+
 
 
 // TODO: Create an array of questions for user input
@@ -59,7 +61,7 @@ const questions = [
   },
   {
     type: 'input',
-    name: 'installInstructions',
+    name: 'installation',
     message: 'Please describe instructions on how to install your project (Required)',
     validate: installInput => {
       if (installInput) {
@@ -99,9 +101,9 @@ const questions = [
   {
     type: 'checkbox',
     name: 'license',
-    message: 'Please choose the appropriate license(s) for your project',
+    message: 'Please choose the appropriate license for your project',
     // may add more choices for licenses once I know more about them
-    choices: ['MIT', 'gpl-3.0', 'eupl-1.1', 'cc', 'afl-3.0']
+    choices: ['MIT', 'ISC', 'EPL-1.0', 'CC0-1.0', 'apache-2.0']
   },
   {
     type: 'input',
@@ -152,13 +154,43 @@ const questions = [
 
 // TODO: Create a function to write README file
 // function writeToFile(fileName, data) {}
+const writeFile = readmeData => {
+  return new Promise((resolve, reject) => {
+    fs.writeFile('./dist/README.md', readmeData, err => {
+      // if there's an error, reject the promise and send the error to the Promise's '.catch' method
+      if (err) {
+        reject(err);
+        // return out of the function here to make sure the Promise doesn't accidentally execture the resolve function as well
+        return;
+      }
+
+      // if everything went well, resolve the Promise and send the successful data to the '.then()' method
+      resolve({
+        ok: true,
+        message: 'README.md file created!'
+      });
+    });
+  });
+};
 
 // TODO: Create a function to initialize app
 function init() {
     return inquirer.prompt(questions)
-    .then(() => {
-      console.log('questions answered!')
+    // .then(() => {
+    //   console.log('Thank you for answering these questions! Creating your project\'s README now!')
+    //   return readmeData;
+    // })
+    .then (readmeData => {
+      return generateMarkdown(readmeData)
     })
+    .then (readmeData => {
+      return writeFile(readmeData)
+    })
+    .catch(err => {
+      console.log(err);
+    });
+    
+   
  
 }
 
