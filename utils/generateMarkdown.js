@@ -1,7 +1,6 @@
 // TODO: Create a function that returns a license badge based on which license is passed in
 // If there is no license, return an empty string
 function renderLicenseBadge(license) {
-  console.log(license)
   const [option] = license
   if (!option) {
     return '';
@@ -22,7 +21,6 @@ function renderLicenseBadge(license) {
 // TODO: Create a function that returns the license link
 // If there is no license, return an empty string
 function renderLicenseLink(license) {
-  console.log(license)
   const [option] = license
   if (!option) {
     return '';
@@ -50,15 +48,6 @@ function renderLicenseSection(license) {
 }
 
 
-// const checkLicense = (license) => {
-//   if (Array.isArray(license)) {
-//     return renderLicenseLink(license)
-//     renderLicenseSection(license)
-//     renderLicenseBadge(license)
-//    }
-// }
-
-
 
 // TODO: Create a function to generate markdown for README
 function generateMarkdown(readmeData) {
@@ -66,6 +55,7 @@ function generateMarkdown(readmeData) {
   # ${readmeData.projectName}
 
   ## Description
+  ![License](https://img.shields.io/badge/License-${renderLicenseBadge(readmeData.license)}\
   
   ${readmeData.description}
 
@@ -75,9 +65,9 @@ function generateMarkdown(readmeData) {
   * [Credits](#credits)
   * [License](#license)
   * [Features](#features)
-  * [Contributing](#contributing)
+  * [Contribution](#contribution)
   * [Tests](#tests)
-  * [Contact](#contact)
+  * [Questions](#questions)
   
   ## Installation
   ${readmeData.installation}
@@ -89,8 +79,10 @@ function generateMarkdown(readmeData) {
   ${readmeData.credits}
   
   ## License
-  ![License](https://img.shields.io/badge/License-${renderLicenseBadge(readmeData.license)}\
+  ![License](https://img.shields.io/badge/License-${renderLicenseBadge(readmeData.license)}
+
   ${renderLicenseSection(readmeData.license)}
+  
   ${renderLicenseLink(readmeData.license)}
   
   ## Contribution
@@ -99,10 +91,10 @@ function generateMarkdown(readmeData) {
   ## Tests
   ${readmeData.tests}
 
-  ## Contact
+  ## Questions
   
   My GitHub username is ${readmeData.github}. The link to this project is https://${readmeData.github}.github.io/${readmeData.projectName}
-  and the link to this project's repository is https://github.com/${readmeData.github}/${readmeData.projectName}.
+  and the link to this project's repository is https://github.com/${readmeData.github}/${readmeData.projectName}. The link to my GitHub profile is https://github.com/${readmeData.github}
   If you would like to contact me for any questions/concerns, please email me at ${readmeData.email}. 
 
   ## ©️2021 ${readmeData.github}

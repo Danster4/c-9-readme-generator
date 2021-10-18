@@ -101,7 +101,7 @@ const questions = [
   {
     type: 'checkbox',
     name: 'license',
-    message: 'Please choose the appropriate license for your project',
+    message: 'Please choose the appropriate license for your project (Required)',
     // may add more choices for licenses once I know more about them
     choices: ['MIT', 'ISC', 'EPL-1.0', 'CC0-1.0', 'apache-2.0']
   },
@@ -119,17 +119,11 @@ const questions = [
     }
   },
   {
-    type: 'confirm',
-    name: 'confirmFeatures',
-    message: 'Would you like to enter some information from your project for a "Features" section?',
-    default: true
-  },
-  {
     type: 'input',
     name: 'features',
-    message: 'Provide some information about the features of your project:',
-    when: ({ confirmFeatures }) => {
-      if (confirmFeatures) {
+    message: 'Provide some information about the features of your project: (Required)',
+    validate: featuresInput => {
+      if (featuresInput) {
         return true;
       } else {
         console.log("Please enter information about the features of your project!");
